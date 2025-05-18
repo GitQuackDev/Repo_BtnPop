@@ -164,6 +164,6 @@
 /* Safe area insets for modern mobile devices */
 @supports (padding-top: env(safe-area-inset-top)) {
   .home-navbar {
-    padding-top: calc(1rem + env(safe-area-inset-top));
+    padding-top: calc(1.5rem + env(safe-area-inset-top));
   }
 }
