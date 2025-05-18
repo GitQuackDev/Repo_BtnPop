@@ -26,6 +26,7 @@ function App() {
         <NavigationWrapper />
         <main>
           <Routes>
+            <Route path ="*" element={<HomePage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/events" element={<EventsPage />} />
