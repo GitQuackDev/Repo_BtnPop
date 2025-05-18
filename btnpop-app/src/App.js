@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NewsPage from './pages/NewsPage';
 import EventsPage from './pages/EventsPage';
@@ -8,6 +8,17 @@ import Navbar from './Components/Navbar/navbar';
 import HomeNavbar from './Components/Navbar/HomeNavbar';
 import Footer from './Components/Footer/footer';
 import './App.css';
+
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function NavigationWrapper() {
   const location = useLocation();
@@ -22,11 +33,12 @@ function NavigationWrapper() {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className='app'>
         <NavigationWrapper />
         <main>
           <Routes>
-            <Route path ="*" element={<HomePage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/events" element={<EventsPage />} />
