@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './newspage.css';
 import rari from '../Content/Images/haha.jpg';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 function NewsPage() {
   const heroRef = useRef(null);
@@ -108,15 +109,17 @@ function NewsPage() {
           <h2 className="latest__title">Latest News</h2>
           <div className="latest__grid">
             {currentNews.map((item) => (
-              <article key={item.id} className="latest__card">
-                <div className="latest__image-wrapper">
-                  <img src={item.image} alt={`News ${item.id}`} className="latest__image" />
-                </div>
-                <div className="latest__content">
-                  <h4 className="latest__heading">{item.title}</h4>
-                  <time className="latest__date">{item.date}</time>
-                </div>
-              </article>
+              <Link to={`/news/${item.id}`} className="latest__card-link" key={item.id}>
+                <article className="latest__card">
+                  <div className="latest__image-wrapper">
+                    <img src={item.image} alt={`News ${item.id}`} className="latest__image" />
+                  </div>
+                  <div className="latest__content">
+                    <h4 className="latest__heading">{item.title}</h4>
+                    <time className="latest__date">{item.date}</time>
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
           

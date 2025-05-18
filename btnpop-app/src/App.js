@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NewsPage from './pages/NewsPage';
+import ArticlePage from './pages/ArticlePage';
+
 import EventsPage from './pages/EventsPage';
 import AboutPage from './pages/AboutPage';
 import Navbar from './Components/Navbar/navbar';
@@ -38,7 +40,7 @@ function AppContent() {
   useEffect(() => {
     // Show loader immediately
     setLoading(true);
-    
+
     // Store the next page content
     const nextPage = (
       <div className='app'>
@@ -50,6 +52,8 @@ function AppContent() {
             <Route path="/news" element={<NewsPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/news/:id" element={<ArticlePage />} />
+
           </Routes>
         </main>
         <Footer />
