@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import NewsPage from './pages/NewsPage';
 import ArticlePage from './pages/ArticlePage';
 import EventsPage from './pages/EventsPage';
+import EventDetailPage from './pages/EventDetailPage';
 import AboutPage from './pages/AboutPage';
 import Navbar from './Components/Navbar/navbar';
 import HomeNavbar from './Components/Navbar/HomeNavbar';
@@ -65,9 +66,9 @@ function AppContent() {
         <NavigationWrapper />
         <main>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/news" element={<NewsPage />} />
+            <Route path="/" element={<HomePage />} />            <Route path="/news" element={<NewsPage />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/:id" element={<EventDetailPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/news/:id" element={<ArticlePage />} />
             {/* Admin Routes - these will now use their own layout defined within AdminDashboard */}

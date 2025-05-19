@@ -1,6 +1,6 @@
 # BTN Pop Content Management System
 
-A comprehensive content management system for a website with news and events sections.
+A comprehensive content management system for a website with modern news and events sections featuring a clean, categorized display and streamlined administration.
 
 ## Project Structure
 
@@ -16,8 +16,8 @@ The project consists of two main parts:
 
 2. Install dependencies for both applications:
    ```
-   cd backend && npm install
-   cd ../btnpop-app && npm install
+   cd backend; npm install
+   cd ../btnpop-app; npm install
    ```
 
 3. Initialize the database using our setup script (from the project root):
@@ -49,7 +49,7 @@ The project consists of two main parts:
 3. Create `.env` file with the following content:
    ```
    PORT=5000
-   MONGO_URI=mongodb+srv://Keen:Xz3jGTTzRIHPuwru@lmsdb.95yce3b.mongodb.net/btnpop-cms?retryWrites=true&w=majority
+   MONGO_URI=INPUT YOUR URI HERE
    JWT_SECRET=btnpop_super_secret_key_123
    JWT_EXPIRY=7d
    NODE_ENV=development
@@ -106,7 +106,8 @@ The project consists of two main parts:
 - Responsive news cards with different variants
 
 ### Events Management
-- View upcoming and past events
+- View events organized by category: Featured, Current, Upcoming, and Past events
+- Modern UI with a responsive layout and filtering capabilities
 - Create, edit and delete events through the admin dashboard
 - Upload images for events
 - Event registration functionality
@@ -114,17 +115,22 @@ The project consists of two main parts:
 ### Admin Dashboard
 - Secure login system
 - Content management interface for news and events
+- Streamlined event management with Edit and Delete functionality
 - User management (admin users only)
 - Media upload capabilities
-
-## API Documentation
-
-Detailed API documentation can be found in the [backend/README.md](backend/README.md) file.
 
 ## User Roles
 
 - **Admin**: Can manage all content and users
-- **Editor**: Can manage news and events, but not users
+
+## UI Features
+
+### Modern Events Page
+- Clean categorization into Featured, Current, Upcoming, and Past events
+- Responsive grid layout with featured event highlight
+- Dynamic filtering and search capabilities
+- Visual indicators for event status (Happening Now, Upcoming, Past)
+- Smooth animations and transitions
 
 ## Technologies Used
 

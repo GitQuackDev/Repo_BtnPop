@@ -13,6 +13,7 @@ const { v4: uuidv4 } = require('uuid');
 const newsRoutes = require('./routes/news');
 const eventsRoutes = require('./routes/events');
 const authRoutes = require('./routes/auth');
+const participantRoutes = require('./routes/participants');
 
 // Import middleware
 const { authenticateJWT } = require('./middleware/auth');
@@ -71,6 +72,7 @@ app.use((req, res, next) => {
 app.use('/api/news', newsRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/participants', participantRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {

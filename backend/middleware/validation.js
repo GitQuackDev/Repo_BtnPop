@@ -26,7 +26,7 @@ exports.validateNews = (req, res, next) => {
  * Validate event creation/update requests
  */
 exports.validateEvent = (req, res, next) => {
-  const { title, description, eventDate, location, organizer } = req.body;
+  const { title, description, eventDate, eventTime, location, organizer } = req.body;
   const errors = [];
 
   if (!title) errors.push('Title is required');
@@ -43,6 +43,23 @@ exports.validateEvent = (req, res, next) => {
   // Validate endDate if present
   if (req.body.endDate && isNaN(Date.parse(req.body.endDate))) {
     errors.push('End date must be a valid date');
+  }
+
+  // Validate coordinates if present
+  if (req.body.coordinates) {
+    try {
+      const coordinates = JSON.parse(req.body.coordinates);
+      if (typeof coordinates.lat !== 'number' || typeof coordinates.lng !== 'number') {
+        errors.push('Coordinates must have valid lat and lng values');
+      }
+    } catch (e) {
+      errors.push('Coordinates must be a valid JSON object');
+    }
+  }
+
+  // Validate maxParticipants if present
+  if (req.body.maxParticipants && isNaN(parseInt(req.body.maxParticipants))) {
+    errors.push('Maximum participants must be a number');
   }
 
   if (errors.length > 0) {

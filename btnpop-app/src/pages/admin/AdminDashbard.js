@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { newsApi, eventsApi, authApi } from '../../services/api';
-import { FaNewspaper, FaCalendarAlt, FaSignOutAlt, FaPlus, FaEdit, FaTrash, FaThumbsUp, FaThumbsDown, FaUsers } from 'react-icons/fa';
+import { FaNewspaper, FaCalendarAlt, FaSignOutAlt, FaPlus, FaEdit, FaTrash, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import './admindashbord.css';
 import NewsForm from '../../Components/AdminDashboard/NewsForm';
 import EventForm from '../../Components/AdminDashboard/EventForm';
@@ -14,6 +14,7 @@ function AdminDashboard() {
   const [error, setError] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
+  
   const [user, setUser] = useState(null);
   
   const navigate = useNavigate();
@@ -232,7 +233,7 @@ function AdminDashboard() {
                 <div className="admin-dashboard__item-engagement">
                   <span className="engagement-stat likes"><FaThumbsUp /> {item.likes || 0}</span>
                   <span className="engagement-stat dislikes"><FaThumbsDown /> {item.dislikes || 0}</span>
-                  <span className="engagement-stat total-engagement"><FaUsers /> {totalEngagement}</span>
+                  <span className="engagement-stat total-engagement">{totalEngagement}</span>
                 </div>
               </div>
               <div className="admin-dashboard__item-actions">
@@ -272,36 +273,70 @@ function AdminDashboard() {
     
     return (
       <div className="admin-dashboard__list">
-        {events.map((item) => (
-          <div key={item._id} className="admin-dashboard__item">
-            <div className="admin-dashboard__item-image">
-              <img src={item.image || 'https://via.placeholder.com/100x100?text=No+Image'} alt={item.title} />
-            </div>
-            <div className="admin-dashboard__item-content">
-              <h3 className="admin-dashboard__item-title">{item.title}</h3>
-              <time className="admin-dashboard__item-date">
-                {new Date(item.date).toLocaleDateString()}
-              </time>
-              <div className="admin-dashboard__item-location">
-                {item.location || 'No location specified'}
+        {events.map((item) => {
+          
+          let eventImageSrc = 'https://via.placeholder.com/100x100?text=No+Image';
+          if (item.imageUrl) {
+            if (typeof item.imageUrl === 'string' && item.imageUrl.startsWith('/uploads/')) {
+              const apiUrl = process.env.REACT_APP_API_URL || window.location.origin;
+              eventImageSrc = `${apiUrl}${item.imageUrl}`;
+            } else {
+              eventImageSrc = item.imageUrl;
+            }
+          } else if (item.image) {
+            if (typeof item.image === 'string' && item.image.startsWith('/uploads/')) {
+              const apiUrl = process.env.REACT_APP_API_URL || window.location.origin;
+              eventImageSrc = `${apiUrl}${item.image}`;
+            } else if (typeof item.image === 'string') {
+              eventImageSrc = item.image;
+            }
+          }
+
+          return (
+            <div key={item._id} className="admin-dashboard__item">
+              <div className="admin-dashboard__item-image">
+                <img src={eventImageSrc} alt={item.title} />
+              </div>
+              <div className="admin-dashboard__item-content">
+                <h3 className="admin-dashboard__item-title">{item.title}</h3>
+                <time className="admin-dashboard__item-date">
+                  {new Date(item.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  {item.eventTime && ` at ${item.eventTime}`}
+                </time>
+                <div className="admin-dashboard__item-location">
+                  {item.location || 'No location specified'}
+                </div>
+                <div className="admin-dashboard__item-registration">
+                  <span className={`admin-dashboard__registration-status ${item.registrationEnabled ? 'open' : 'closed'}`}>
+                    {item.registrationEnabled ? 'Registration Open' : 'Registration Closed'}
+                  </span>
+                  {item.registrationEnabled && (
+                    <span className="admin-dashboard__participant-count">
+                      {item.participantCount || 0} participant{(item.participantCount !== 1) ? 's' : ''}
+                      {item.maxParticipants > 0 && ` / ${item.maxParticipants}`}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="admin-dashboard__item-actions">
+                <button 
+                  className="admin-dashboard__action-btn admin-dashboard__action-btn--edit"
+                  onClick={() => handleEdit(item)}
+                  title="Edit Event"
+                >
+                  <FaEdit />
+                </button>
+                <button 
+                  className="admin-dashboard__action-btn admin-dashboard__action-btn--delete"
+                  onClick={() => handleDelete(item._id)}
+                  title="Delete Event"
+                >
+                  <FaTrash />
+                </button>
               </div>
             </div>
-            <div className="admin-dashboard__item-actions">
-              <button 
-                className="admin-dashboard__action-btn admin-dashboard__action-btn--edit"
-                onClick={() => handleEdit(item)}
-              >
-                <FaEdit />
-              </button>
-              <button 
-                className="admin-dashboard__action-btn admin-dashboard__action-btn--delete"
-                onClick={() => handleDelete(item._id)}
-              >
-                <FaTrash />
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   };
@@ -360,8 +395,7 @@ function AdminDashboard() {
         <div className="admin-dashboard__content">
           {activeTab === 'news' ? renderNewsList() : renderEventsList()}
         </div>
-        
-        {isFormOpen && (
+          {isFormOpen && (
           <div className="admin-dashboard__modal">
             <div className="admin-dashboard__modal-content">
               {renderForm()}

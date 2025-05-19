@@ -72,12 +72,17 @@ exports.getAllEvents = async (req, res) => {
 
 // Get upcoming events
 exports.getUpcomingEvents = async (req, res) => {
-  try {
-    const { limit = 5 } = req.query;
+  try {    const { limit = 5 } = req.query;
     
     const currentDate = new Date();
-    const events = await Event.find({ 
-      eventDate: { $gte: currentDate },
+    const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+    
+    // Find events that start today or in the future, or have an end date in the future
+    const events = await Event.find({
+      $or: [
+        { eventDate: { $gte: todayStart } },
+        { endDate: { $gte: todayStart } }
+      ],
       isUpcoming: true
     })
       .limit(parseInt(limit, 10))
@@ -126,13 +131,18 @@ exports.createEvent = async (req, res) => {
       title, 
       description, 
       eventDate,
-      endDate, 
+      eventTime,
+      endDate,
+      endTime, 
       location,
       organizer,
       category,
       registrationUrl,
       registrationRequired,
-      isFeatured
+      registrationEnabled,
+      maxParticipants,
+      isFeatured,
+      coordinates
     } = req.body;
 
     let imageUrl = '';
@@ -144,17 +154,32 @@ exports.createEvent = async (req, res) => {
     
     const slug = generateSlug(title);
     
+    // Handle coordinates if provided
+    let parsedCoordinates = undefined;
+    if (coordinates) {
+      try {
+        parsedCoordinates = JSON.parse(coordinates);
+      } catch (error) {
+        console.error('Error parsing coordinates:', error);
+      }
+    }
+    
     const event = new Event({
       title,
       description,
       imageUrl,
       eventDate: new Date(eventDate),
+      eventTime,
       endDate: endDate ? new Date(endDate) : undefined,
+      endTime,
       location,
+      coordinates: parsedCoordinates,
       organizer,
       category: category || 'Other',
       registrationUrl,
       registrationRequired: registrationRequired === 'true',
+      registrationEnabled: registrationEnabled === 'true',
+      maxParticipants: maxParticipants ? parseInt(maxParticipants) : undefined,
       isFeatured: isFeatured === 'true',
       slug,
     });
@@ -175,13 +200,18 @@ exports.updateEvent = async (req, res) => {
       title, 
       description, 
       eventDate,
-      endDate, 
+      eventTime,
+      endDate,
+      endTime, 
       location,
       organizer,
       category,
       registrationUrl,
       registrationRequired,
-      isFeatured
+      registrationEnabled,
+      maxParticipants,
+      isFeatured,
+      coordinates
     } = req.body;
     
     const eventToUpdate = await Event.findById(req.params.id);
@@ -202,13 +232,16 @@ exports.updateEvent = async (req, res) => {
       
       eventToUpdate.imageUrl = `/uploads/${req.file.filename}`;
     }
-    
-    // Update fields
+      // Update fields
     eventToUpdate.title = title || eventToUpdate.title;
     eventToUpdate.description = description || eventToUpdate.description;
     
     if (eventDate) {
       eventToUpdate.eventDate = new Date(eventDate);
+    }
+    
+    if (eventTime !== undefined) {
+      eventToUpdate.eventTime = eventTime;
     }
     
     if (endDate) {
@@ -217,9 +250,23 @@ exports.updateEvent = async (req, res) => {
       eventToUpdate.endDate = undefined;
     }
     
+    if (endTime !== undefined) {
+      eventToUpdate.endTime = endTime;
+    }
+    
     eventToUpdate.location = location || eventToUpdate.location;
     eventToUpdate.organizer = organizer || eventToUpdate.organizer;
     eventToUpdate.category = category || eventToUpdate.category;
+    
+    // Handle coordinates update
+    if (coordinates) {
+      try {
+        const parsedCoordinates = JSON.parse(coordinates);
+        eventToUpdate.coordinates = parsedCoordinates;
+      } catch (error) {
+        console.error('Error parsing coordinates:', error);
+      }
+    }
     
     if (registrationUrl !== undefined) {
       eventToUpdate.registrationUrl = registrationUrl;
@@ -227,6 +274,14 @@ exports.updateEvent = async (req, res) => {
     
     if (registrationRequired !== undefined) {
       eventToUpdate.registrationRequired = registrationRequired === 'true';
+    }
+    
+    if (registrationEnabled !== undefined) {
+      eventToUpdate.registrationEnabled = registrationEnabled === 'true';
+    }
+    
+    if (maxParticipants !== undefined) {
+      eventToUpdate.maxParticipants = maxParticipants ? parseInt(maxParticipants) : undefined;
     }
     
     if (isFeatured !== undefined) {

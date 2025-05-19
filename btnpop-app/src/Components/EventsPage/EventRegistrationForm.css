@@ -1,0 +1,202 @@
+.event-registration-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.event-registration-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.event-registration-form__header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.event-registration-form__close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.event-registration-form__close:hover {
+  color: #e53935;
+}
+
+.event-registration-form__group {
+  margin-bottom: 1.25rem;
+}
+
+.event-registration-form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.event-registration-form__label svg {
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.event-registration-form__input,
+.event-registration-form__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.event-registration-form__input:focus,
+.event-registration-form__textarea:focus {
+  border-color: #4285f4;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.event-registration-form__input.error,
+.event-registration-form__textarea.error {
+  border-color: #e53935;
+}
+
+.event-registration-form__field-error {
+  display: block;
+  color: #e53935;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+.event-registration-form__error-message {
+  padding: 0.75rem 1rem;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  color: #c62828;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.event-registration-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  gap: 10px;
+}
+
+.event-registration-form__button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+  border: none;
+}
+
+.event-registration-form__button:active {
+  transform: translateY(1px);
+}
+
+.event-registration-form__button--primary {
+  background-color: #4285f4;
+  color: white;
+}
+
+.event-registration-form__button--primary:hover {
+  background-color: #3367d6;
+}
+
+.event-registration-form__button--primary:disabled {
+  background-color: #a5c7ff;
+  cursor: not-allowed;
+}
+
+.event-registration-form__button--secondary {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.event-registration-form__button--secondary:hover {
+  background-color: #e8e8e8;
+}
+
+/* Success state */
+.event-registration-form__success {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.event-registration-form__success-icon {
+  font-size: 3rem;
+  color: #4caf50;
+  margin-bottom: 1rem;
+}
+
+.event-registration-form__success h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.event-registration-form__success p {
+  margin: 0 0 1.5rem;
+  color: #555;
+}
+
+.event-registration-form__registration-id {
+  background-color: #f5f5f5;
+  border: 1px dashed #ccc;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-registration-form__id-label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.event-registration-form__id-label svg {
+  margin-right: 0.5rem;
+}
+
+.event-registration-form__id-value {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.event-registration-form__save-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}

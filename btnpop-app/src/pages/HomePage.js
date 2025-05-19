@@ -1,35 +1,69 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import heroImage from '../Content/Images/rari.jpg';
 import './home.css';
-import { newsApi } from '../services/api';
+import { newsApi, eventsApi } from '../services/api';
 import NewsCard from '../Components/NewsPage/NewsCard';
+import EventCard from '../Components/EventsPage/EventCard';
+import EventModal from '../Components/EventsPage/EventModal'; // Import the EventModal component
+import { motion } from 'framer-motion';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 function HomePage() {
-  const [latestNewsItem, setLatestNewsItem] = useState(null); // Changed to single item
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [latestNewsItem, setLatestNewsItem] = useState(null);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [newsError, setNewsError] = useState(null);
+  const [eventsError, setEventsError] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Fetch the latest news
   useEffect(() => {
     const fetchLatestNews = async () => {
       try {
-        setLoading(true);
+        setNewsLoading(true);
         const response = await newsApi.getAllNews(1, 1); // Fetch only 1 latest news item
         if (response && response.news && response.news.length > 0) {
           setLatestNewsItem(response.news[0]); // Store the single news item
         } else {
           setLatestNewsItem(null);
         }
-        setError(null);
+        setNewsError(null);
       } catch (err) {
         console.error("Error fetching latest news:", err);
-        setError("Failed to load latest news.");
+        setNewsError("Failed to load latest news.");
         setLatestNewsItem(null);
       } finally {
-        setLoading(false);
+        setNewsLoading(false);
       }
     };
 
     fetchLatestNews();
+  }, []);
+  // Fetch current and upcoming events
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setEventsLoading(true);
+        const response = await eventsApi.getCurrentAndUpcomingEvents(3); // Fetch 3 events (current + upcoming)
+        if (response && response.events) {
+          setUpcomingEvents(response.events);
+        } else {
+          setUpcomingEvents([]);
+        }
+        setEventsError(null);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        setEventsError("Failed to load events.");
+        setUpcomingEvents([]);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   return (
@@ -47,9 +81,12 @@ function HomePage() {
         </div>
         <div className="hero__image">
           <img src={heroImage} alt="Hero" />
-        </div>
-      </section>
-
+        </div>      </section>
+      
+      <div className="section-divider">
+        <div className="wave"></div>
+      </div>
+      
       <section className="home_news">
         <div className="home_news__container">
           <div className="home_news__header_container"> 
@@ -57,51 +94,91 @@ function HomePage() {
             <h2 className="home_news__title">OUR LATEST NEWS</h2>
           </div>
 
-          {loading && <p className="home_news__loading">Loading news...</p>}
-          {error && <p className="home_news__error">{error}</p>}
+          {newsLoading && <p className="home_news__loading">Loading news...</p>}
+          {newsError && <p className="home_news__error">{newsError}</p>}
           
-          {!loading && !error && !latestNewsItem && (
+          {!newsLoading && !newsError && !latestNewsItem && (
             <p className="home_news__empty">No latest news to display at the moment.</p>
           )}
 
-          {!loading && !error && latestNewsItem && (
-            <div className="home_news__latest_item_display"> {/* Renamed class for single item display */}
-              <NewsCard news={latestNewsItem} isFeature={true} /> {/* Display single item as a feature card */}
+          {!newsLoading && !newsError && latestNewsItem && (
+            <div className="home_news__latest_item_display">
+              <NewsCard news={latestNewsItem} isFeature={true} />
             </div>
           )}
         </div>
       </section>
 
-      <section className="events">
-        <h2 className="events__title">UPCOMING EVENTS AND IMPORTANT DATES</h2>
-        <h3 className="events__label">STAY TUNED!</h3>
-        <div className="events__scroll-container">
-          <div className="events__grid">
-            <div className="events__card">
-              <div className="events__card-content">
-                <h4>Event 1</h4>
-                <p>Coming Soon</p>
-              </div>
-            </div>
-            <div className="events__card">
-              <div className="events__card-content">
-                <h4>Event 2</h4>
-                <p>Coming Soon</p>
-              </div>
-            </div>
-            <div className="events__card">
-              <div className="events__card-content">
-                <h4>Event 3</h4>
-                <p>Coming Soon</p>
-              </div>
-            </div>
+      <div className="section-divider">
+        <div className="wave"></div>
+      </div>      <section className="home_events">
+        <div className="home_events__container">
+          <div className="home_events__header"> 
+            <h2 className="home_events__title">CURRENT & UPCOMING EVENTS</h2>
+            <span className="home_events__label">JOIN US!</span>
           </div>
+          
+          {eventsLoading && (
+            <div className="home_events__loading">
+              <div className="spinner"></div>
+              <p>Loading upcoming events...</p>
+            </div>
+          )}
+          
+          {eventsError && <p className="home_events__error">{eventsError}</p>}
+            {!eventsLoading && !eventsError && upcomingEvents.length === 0 && (
+            <div className="home_events__empty">
+              <div className="home_events__empty-card">
+                <FaCalendarAlt className="home_events__empty-icon" />
+                <p className="home_events__empty-text">No current or upcoming events to display at the moment.</p>
+                <p className="home_events__coming-soon">Check back soon for exciting events!</p>
+              </div>
+            </div>
+          )}
+          
+          {!eventsLoading && !eventsError && upcomingEvents.length > 0 && (
+            <>
+              <div className="home_events__grid">                {upcomingEvents.map((event, index) => (
+                  <motion.div 
+                    key={event._id || index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="home_events__card-wrapper"
+                  >
+                    <div className="home_events__card-container">
+                      {event.eventStatus && (
+                        <div className={`home_events__status-badge home_events__status-badge--${event.eventStatus}`}>
+                          {event.eventStatus === 'current' ? 'HAPPENING NOW' : 'UPCOMING'}
+                        </div>
+                      )}
+                      <EventCard event={{...event, onOpenModal: () => { setSelectedEvent(event); setIsModalOpen(true); }}} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="home_events__view-all">
+                <Link to="/events" className="home_events__view-all-btn">
+                  <span>View All Events</span>
+                  <FaCalendarAlt />
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </section>
+
+      <div className="section-divider">
+        <div className="wave"></div>
+      </div>
 
       <section className="history">
         <h2 className="history__title">We're going to make history.</h2>
       </section>
+
+      {isModalOpen && selectedEvent && (
+        <EventModal event={selectedEvent} isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setSelectedEvent(null); }} />
+      )}
     </>
   );
 }

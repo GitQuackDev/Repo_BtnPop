@@ -1,6 +1,12 @@
 /**
  * This script runs as a scheduled task to update the isUpcoming flag for events
- * based on their eventDate. Events with dates in the past will be marked as not upcoming.
+ * based on their eventDate and endDate.
+ * 
+ * Events are considered "not upcoming" (past) when:
+ * 1. The event has an endDate that's in the past, OR
+ * 2. The event has no endDate AND its eventDate is in the past
+ * 
+ * This ensures proper categorization of multi-day events that span across dates.
  */
 
 require('dotenv').config();
@@ -15,13 +21,22 @@ async function updateEventStatus() {
       useUnifiedTopology: true,
     });
     console.log('MongoDB Connected');
+      const currentDate = new Date();
+    const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
     
-    const currentDate = new Date();
-    
-    // Find all events with eventDate in the past but still marked as upcoming
-    const events = await Event.find({ 
-      eventDate: { $lt: currentDate },
-      isUpcoming: true
+    // Find all events that have ended but are still marked as upcoming
+    // An event is considered ended when both its eventDate is in the past
+    // and either it has no endDate or the endDate is also in the past
+    const events = await Event.find({
+      $and: [
+        { 
+          $or: [
+            { endDate: { $lt: todayStart } },
+            { $and: [{ endDate: null }, { eventDate: { $lt: todayStart } }] }
+          ]
+        },
+        { isUpcoming: true }
+      ]
     });
     
     if (events.length === 0) {

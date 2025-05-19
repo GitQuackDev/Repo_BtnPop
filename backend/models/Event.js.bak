@@ -88,20 +88,14 @@ const EventSchema = new mongoose.Schema({
   }
 });
 
-// Middleware to automatically set isUpcoming based on event date and endDate
+// Middleware to automatically set isUpcoming based on event date
 EventSchema.pre('save', function(next) {
   const currentDate = new Date();
-  const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-  
-  // Get the end date (use eventDate if no endDate is specified)
-  const endDate = this.endDate || this.eventDate;
-  // Normalize end date to end of day
-  const endDateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59, 999);
-  
-  // Event is upcoming if it hasn't ended yet
-  this.isUpcoming = endDateEnd >= todayStart;
-  
-  this.updatedAt = Date.now();
+  if (this.eventDate < currentDate) {
+    this.isUpcoming = false;
+  } else {
+    this.isUpcoming = true;
+  }
   next();
 });
 

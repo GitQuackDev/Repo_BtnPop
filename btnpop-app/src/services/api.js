@@ -225,11 +225,83 @@ const eventsApi = {
     }
   },
   
+  // Register for an event
+  registerForEvent: async (eventId, participantData) => {
+    try {
+      const response = await apiClient.post(`/participants/${eventId}/register`, participantData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
   // Get upcoming events
   getUpcomingEvents: async (limit = 5) => {
     try {
       const response = await apiClient.get(`/events?upcoming=true&limit=${limit}`);
       return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Get current and upcoming events combined
+  getCurrentAndUpcomingEvents: async (limit = 5) => {
+    try {
+      // Get all events and filter them on the client side for more control
+      const response = await apiClient.get(`/events?limit=${limit*2}`);
+      
+      if (!response.data || !response.data.events) {
+        return { events: [] };
+      }
+      
+      const currentDate = new Date();
+      const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+      
+      // Sort events into current and upcoming
+      const currentEvents = [];
+      const upcomingEvents = [];
+        response.data.events.forEach(event => {
+        const eventStartDate = new Date(event.eventDate);
+        const eventStartDay = new Date(eventStartDate.getFullYear(), eventStartDate.getMonth(), eventStartDate.getDate());
+        
+        let eventEndDate;
+        if (event.endDate) {
+          eventEndDate = new Date(event.endDate);
+        } else {
+          eventEndDate = new Date(event.eventDate);
+        }
+        const eventEndDay = new Date(eventEndDate.getFullYear(), eventEndDate.getMonth(), eventEndDate.getDate(), 23, 59, 59, 999);
+
+        if (eventStartDay <= todayStart && eventEndDay >= todayStart) {
+          // Add status property to indicate this is happening now
+          currentEvents.push({ 
+            ...event, 
+            eventStatus: 'current' 
+          });
+        } else if (eventStartDay > todayStart) {
+          // Add status property to indicate this is upcoming
+          upcomingEvents.push({ 
+            ...event, 
+            eventStatus: 'upcoming' 
+          });
+        }
+      });
+      
+      // Sort current events by end date (soonest ending first)
+      currentEvents.sort((a, b) => {
+        const aEndDate = a.endDate ? new Date(a.endDate) : new Date(a.eventDate);
+        const bEndDate = b.endDate ? new Date(b.endDate) : new Date(b.eventDate);
+        return aEndDate - bEndDate;
+      });
+      
+      // Sort upcoming events by start date (soonest starting first)
+      upcomingEvents.sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+      
+      // Combine with current events first, then upcoming, limit to requested number
+      const combinedEvents = [...currentEvents, ...upcomingEvents].slice(0, limit);
+      
+      return { events: combinedEvents };
     } catch (error) {
       throw error;
     }
@@ -390,4 +462,57 @@ const authApi = {
   },
 };
 
-export { newsApi, eventsApi, authApi };
+// Participants API
+const participantsApi = {
+  // Get all participants for an event (admin only)
+  getEventParticipants: async (eventId) => {
+    try {
+      const response = await apiClient.get(`/participants/event/${eventId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Get participant details by ID (admin only)
+  getParticipantById: async (id) => {
+    try {
+      const response = await apiClient.get(`/participants/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Verify participant by join ID (public)
+  verifyParticipant: async (joinId) => {
+    try {
+      const response = await apiClient.get(`/participants/verify/${joinId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Download ticket by participant ID (public)
+  downloadTicket: async (participantId) => {
+    try {
+      // Return the URL for direct downloading
+      return `${API_URL}/participants/ticket/${participantId}`;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Update participant status (admin only)
+  updateParticipantStatus: async (id, status) => {
+    try {
+      const response = await apiClient.put(`/participants/${id}/status`, { status });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
+export { newsApi, eventsApi, authApi, participantsApi };

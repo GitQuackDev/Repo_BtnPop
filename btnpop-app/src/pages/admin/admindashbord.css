@@ -371,6 +371,14 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+.admin-dashboard__action-btn--participants {
+  background-color: var(--admin-info-color);
+}
+
+.admin-dashboard__action-btn--participants:hover {
+  background-color: #138496; /* Darker shade of the info color */
+}
+
 /* Modal */
 .admin-dashboard__modal {
   position: fixed;
@@ -397,6 +405,152 @@
   overflow-y: auto;
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
   border-top: 5px solid var(--admin-primary-color);
+}
+
+/* Modal Header Styles */
+.admin-dashboard__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--admin-border-color);
+}
+
+.admin-dashboard__modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.admin-dashboard__modal-header--draggable {
+  cursor: move;
+  background-color: #f8f9fa;
+}
+
+.admin-dashboard__modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-dashboard__modal-close,
+.admin-dashboard__modal-resize {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.admin-dashboard__modal-close {
+  color: #dc3545;
+}
+
+.admin-dashboard__modal-resize {
+  color: #6c757d;
+}
+
+.admin-dashboard__modal-close:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.admin-dashboard__modal-resize:hover {
+  background-color: rgba(108, 117, 125, 0.1);
+}
+
+.admin-dashboard__modal-content--participants {
+  max-width: 90%;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard__modal-content--participants.fullscreen {
+  max-width: 98%;
+  width: 98%;
+  height: 95vh;
+}
+
+/* Participants Modal Specific Styles */
+.admin-dashboard__modal--participants {
+  z-index: 1060; /* Higher z-index to appear on top of other modals */
+}
+
+.admin-dashboard__modal-content--participants {
+  max-width: 95%;
+  max-height: 90vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dashboard__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border-color);
+}
+
+.admin-dashboard__modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--admin-text-color);
+}
+
+.admin-dashboard__modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.75rem;
+  color: var(--admin-text-muted-color);
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-dashboard__modal-close:hover {
+  color: var(--admin-danger-color);
+}
+
+/* Registration Status Styles */
+.admin-dashboard__item-registration {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-dashboard__registration-status {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.admin-dashboard__registration-status.open {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-dashboard__registration-status.closed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.admin-dashboard__participant-count {
+  font-size: 0.85rem;
+  color: var(--admin-text-muted-color);
 }
 
 /* Responsive */
