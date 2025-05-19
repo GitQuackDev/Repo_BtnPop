@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import heroImage from '../Content/Images/rari.jpg';
-import newsImage from '../Content/Images/haha.jpg';
 import './home.css';
+import { newsApi } from '../services/api';
+import NewsCard from '../Components/NewsPage/NewsCard';
 
 function HomePage() {
+  const [latestNewsItem, setLatestNewsItem] = useState(null); // Changed to single item
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLatestNews = async () => {
+      try {
+        setLoading(true);
+        const response = await newsApi.getAllNews(1, 1); // Fetch only 1 latest news item
+        if (response && response.news && response.news.length > 0) {
+          setLatestNewsItem(response.news[0]); // Store the single news item
+        } else {
+          setLatestNewsItem(null);
+        }
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching latest news:", err);
+        setError("Failed to load latest news.");
+        setLatestNewsItem(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestNews();
+  }, []);
+
   return (
     <>
       <section className="hero">
@@ -24,23 +52,23 @@ function HomePage() {
 
       <section className="home_news">
         <div className="home_news__container">
-          <div className="home_news__preview">
-            <div className="home_news__image-wrapper">
-              <img src={newsImage} alt="News Preview" className="home_news__image" />
-            </div>
-            <div className="home_news__content">
-              <div className="home_news__header">
-                <span className="home_news__label">STAY UP TO DATE</span>
-                <h2 className="home_news__title">OUR LATEST NEWS</h2>
-              </div>
-              <p className="home_news__text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ornare ipsum sit amet urna feugiat, venenatis venenatis neque viverra.
-              </p>
-              <p className="home_news__text">
-                Fusce nulla risus, tristique nec mollis consequat, blandit sed est. Sed vehicula nibh eu nunc tristique, quis feugiat quam hendrerit.
-              </p>
-            </div>
+          <div className="home_news__header_container"> 
+            <span className="home_news__label">STAY UP TO DATE</span>
+            <h2 className="home_news__title">OUR LATEST NEWS</h2>
           </div>
+
+          {loading && <p className="home_news__loading">Loading news...</p>}
+          {error && <p className="home_news__error">{error}</p>}
+          
+          {!loading && !error && !latestNewsItem && (
+            <p className="home_news__empty">No latest news to display at the moment.</p>
+          )}
+
+          {!loading && !error && latestNewsItem && (
+            <div className="home_news__latest_item_display"> {/* Renamed class for single item display */}
+              <NewsCard news={latestNewsItem} isFeature={true} /> {/* Display single item as a feature card */}
+            </div>
+          )}
         </div>
       </section>
 

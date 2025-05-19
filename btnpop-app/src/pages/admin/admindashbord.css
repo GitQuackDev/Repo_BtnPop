@@ -1,0 +1,501 @@
+/* Admin Dashboard Styles */
+:root {
+  --admin-primary-color: #007bff; /* Blue */
+  --admin-secondary-color: #6c757d; /* Gray */
+  --admin-success-color: #28a745; /* Green */
+  --admin-danger-color: #dc3545; /* Red */
+  --admin-warning-color: #ffc107; /* Yellow */
+  --admin-info-color: #17a2b8; /* Teal */
+  --admin-light-color: #f8f9fa; /* Light Gray */
+  --admin-dark-color: #343a40; /* Dark Gray */
+  --admin-background-color: #f4f6f9; /* Lighter Gray for background */
+  --admin-white-color: #ffffff;
+  --admin-text-color: #212529;
+  --admin-text-muted-color: #6c757d;
+  --admin-border-color: #dee2e6;
+  --admin-card-bg: var(--admin-white-color);
+  --admin-card-border-radius: 0.375rem;
+  --admin-card-box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+  --admin-font-family: 'Inter', sans-serif; /* Modern sans-serif font */
+  --admin-spacing-unit: 1rem;
+}
+
+.admin-dashboard {
+  display: grid;
+  grid-template-columns: 260px 1fr; /* Slightly wider sidebar */
+  min-height: 100vh;
+  background-color: var(--admin-background-color);
+  font-family: var(--admin-font-family);
+}
+
+/* Sidebar */
+.admin-dashboard__sidebar {
+  background-color: var(--admin-dark-color);
+  color: var(--admin-light-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.admin-dashboard__logo {
+  padding: calc(var(--admin-spacing-unit) * 1.5) var(--admin-spacing-unit);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.admin-dashboard__logo h1 {
+  font-size: 1.75rem;
+  color: var(--admin-white-color);
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-dashboard__nav {
+  flex: 1;
+  padding: var(--admin-spacing-unit) 0;
+}
+
+.admin-dashboard__nav-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--admin-spacing-unit) calc(var(--admin-spacing-unit) * 1.5);
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  color: var(--admin-light-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.admin-dashboard__nav-btn svg {
+  margin-right: var(--admin-spacing-unit);
+  font-size: 1.25em;
+  opacity: 0.8;
+}
+
+.admin-dashboard__nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--admin-white-color);
+}
+
+.admin-dashboard__nav-btn.active {
+  background-color: var(--admin-primary-color);
+  color: var(--admin-white-color);
+  font-weight: 500;
+  border-left: 4px solid var(--admin-warning-color);
+}
+
+.admin-dashboard__nav-btn.active svg {
+  opacity: 1;
+}
+
+.admin-dashboard__user {
+  padding: var(--admin-spacing-unit) calc(var(--admin-spacing-unit) * 1.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-dashboard__user-name {
+  font-weight: 500;
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.5);
+  font-size: 0.9rem;
+}
+
+.admin-dashboard__logout {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--admin-warning-color);
+  padding: calc(var(--admin-spacing-unit) * 0.5) 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.admin-dashboard__logout:hover {
+  color: var(--admin-danger-color);
+}
+
+.admin-dashboard__logout svg {
+  margin-right: calc(var(--admin-spacing-unit) * 0.5);
+}
+
+/* Main Content */
+.admin-dashboard__main {
+  padding: calc(var(--admin-spacing-unit) * 2);
+  overflow-y: auto;
+}
+
+.admin-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--admin-spacing-unit) * 2);
+  padding-bottom: var(--admin-spacing-unit);
+  border-bottom: 1px solid var(--admin-border-color);
+}
+
+.admin-dashboard__title {
+  font-size: 1.8rem;
+  color: var(--admin-text-color);
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-dashboard__create-btn {
+  display: flex;
+  align-items: center;
+  padding: calc(var(--admin-spacing-unit) * 0.75) calc(var(--admin-spacing-unit) * 1.5);
+  background-color: var(--admin-primary-color);
+  color: var(--admin-white-color);
+  border: none;
+  border-radius: var(--admin-card-border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-dashboard__create-btn svg {
+  margin-right: calc(var(--admin-spacing-unit) * 0.5);
+  font-size: 1.1em;
+}
+
+.admin-dashboard__create-btn:hover {
+  background-color: darken(var(--admin-primary-color), 10%);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Content Area */
+.admin-dashboard__content {
+  background-color: transparent; /* No separate background for content area */
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0; /* No padding for the direct content wrapper */
+}
+
+.admin-dashboard__loading,
+.admin-dashboard__error,
+.admin-dashboard__empty {
+  padding: calc(var(--admin-spacing-unit) * 2);
+  text-align: center;
+  color: var(--admin-text-muted-color);
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-card-border-radius);
+  box-shadow: var(--admin-card-box-shadow);
+  margin-top: var(--admin-spacing-unit);
+}
+
+.admin-dashboard__error {
+  color: var(--admin-danger-color);
+  border-left: 5px solid var(--admin-danger-color);
+}
+
+/* Item List - Modernized */
+.admin-dashboard__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+  gap: calc(var(--admin-spacing-unit) * 1.5);
+}
+
+.admin-dashboard__item {
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-border-color);
+  border-radius: var(--admin-card-border-radius);
+  padding: var(--admin-spacing-unit);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: var(--admin-card-box-shadow);
+}
+
+.admin-dashboard__item:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.admin-dashboard__item-image {
+  width: 100%;
+  height: 180px; /* Fixed height for consistency */
+  overflow: hidden;
+  border-radius: calc(var(--admin-card-border-radius) - 1px) calc(var(--admin-card-border-radius) - 1px) 0 0; /* Match card radius */
+  margin-bottom: var(--admin-spacing-unit);
+}
+
+.admin-dashboard__item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.admin-dashboard__item:hover .admin-dashboard__item-image img {
+  transform: scale(1.05);
+}
+
+.admin-dashboard__item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dashboard__item-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 calc(var(--admin-spacing-unit) * 0.5) 0;
+  color: var(--admin-text-color);
+  line-height: 1.4;
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* Standard property */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-dashboard__item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.75);
+}
+
+.admin-dashboard__item-date,
+.admin-dashboard__item-category {
+  color: var(--admin-text-muted-color);
+  font-size: 0.85rem;
+}
+
+.admin-dashboard__item-category {
+  background-color: var(--admin-light-color);
+  padding: calc(var(--admin-spacing-unit) * 0.25) calc(var(--admin-spacing-unit) * 0.5);
+  border-radius: calc(var(--admin-card-border-radius) * 0.5);
+  font-weight: 500;
+}
+
+.admin-dashboard__item-summary {
+  color: var(--admin-text-muted-color);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: var(--admin-spacing-unit);
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* Standard property */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-dashboard__item-engagement {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--admin-spacing-unit) * 1.5); /* Increased gap */
+  margin-top: calc(var(--admin-spacing-unit) * 0.75);
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.75); /* Added margin bottom */
+  color: var(--admin-text-muted-color);
+  font-size: 0.85rem;
+}
+
+.engagement-stat {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--admin-spacing-unit) * 0.4); /* Gap between icon and text */
+}
+
+.engagement-stat svg {
+  font-size: 1em; /* Adjust icon size if needed */
+  color: var(--admin-secondary-color); /* Default icon color */
+}
+
+.engagement-stat.likes svg {
+  color: var(--admin-success-color); /* Green for likes */
+}
+
+.engagement-stat.dislikes svg {
+  color: var(--admin-danger-color); /* Red for dislikes */
+}
+
+.engagement-stat.total-engagement svg {
+  color: var(--admin-info-color); /* Blue for total engagement */
+}
+
+.admin-dashboard__item-actions {
+  display: flex;
+  gap: calc(var(--admin-spacing-unit) * 0.75);
+  margin-top: auto; /* Push actions to the bottom */
+  padding-top: var(--admin-spacing-unit);
+  border-top: 1px solid var(--admin-border-color);
+}
+
+.admin-dashboard__action-btn {
+  flex: 1; /* Make buttons take equal width */
+  padding: calc(var(--admin-spacing-unit) * 0.6) calc(var(--admin-spacing-unit) * 1);
+  border-radius: var(--admin-card-border-radius);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--admin-white-color);
+}
+
+.admin-dashboard__action-btn svg {
+  margin-right: calc(var(--admin-spacing-unit) * 0.5);
+}
+
+.admin-dashboard__action-btn--edit {
+  background-color: var(--admin-info-color);
+}
+.admin-dashboard__action-btn--edit:hover {
+  background-color: darken(var(--admin-info-color), 10%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.admin-dashboard__action-btn--delete {
+  background-color: var(--admin-danger-color);
+}
+.admin-dashboard__action-btn--delete:hover {
+  background-color: darken(var(--admin-danger-color), 10%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Modal */
+.admin-dashboard__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--admin-spacing-unit);
+  z-index: 1050; /* Ensure modal is on top */
+  backdrop-filter: blur(5px);
+}
+
+.admin-dashboard__modal-content {
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-card-border-radius);
+  padding: calc(var(--admin-spacing-unit) * 1.5);
+  width: 100%;
+  max-width: 800px; /* Wider modal for forms */
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+  border-top: 5px solid var(--admin-primary-color);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .admin-dashboard__list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .admin-dashboard__modal-content {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    grid-template-columns: 1fr; /* Stack sidebar and main content */
+  }
+  
+  .admin-dashboard__sidebar {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    height: auto;
+    flex-direction: row; /* Horizontal layout for mobile nav */
+    justify-content: space-around;
+    background-color: var(--admin-dark-color);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    padding: 0;
+  }
+
+  .admin-dashboard__logo,
+  .admin-dashboard__user {
+    display: none; /* Hide logo and user info on mobile nav */
+  }
+
+  .admin-dashboard__nav {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    padding: 0;
+  }
+
+  .admin-dashboard__nav-btn {
+    flex: 1;
+    flex-direction: column;
+    padding: calc(var(--admin-spacing-unit) * 0.75) calc(var(--admin-spacing-unit) * 0.5);
+    font-size: 0.8rem;
+    border-left: none;
+    border-top: 4px solid transparent;
+  }
+  .admin-dashboard__nav-btn.active {
+    border-left: none;
+    border-top: 4px solid var(--admin-warning-color);
+    background-color: var(--admin-primary-color);
+  }
+
+  .admin-dashboard__nav-btn svg {
+    margin-right: 0;
+    margin-bottom: calc(var(--admin-spacing-unit) * 0.25);
+    font-size: 1.5em;
+  }
+
+  .admin-dashboard__main {
+    padding: var(--admin-spacing-unit);
+    padding-bottom: calc(var(--admin-spacing-unit) * 5); /* Space for fixed bottom nav */
+  }
+
+  .admin-dashboard__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--admin-spacing-unit);
+  }
+
+  .admin-dashboard__title {
+    font-size: 1.5rem;
+  }
+
+  .admin-dashboard__create-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-dashboard__list {
+    grid-template-columns: 1fr; /* Single column for items on small screens */
+  }
+
+  .admin-dashboard__item-image {
+    height: 150px;
+  }
+
+  .admin-dashboard__modal-content {
+    padding: var(--admin-spacing-unit);
+    max-height: 85vh;
+  }
+}
+
+/* Utility for darkening colors, SCSS like darken function */
+/* This is a placeholder, actual darken requires JS or preprocessor */
+/* Example: darken(var(--admin-primary-color), 10%) */
+/* For CSS, you'd typically define the darker shades manually or use HSL manipulation if supported */

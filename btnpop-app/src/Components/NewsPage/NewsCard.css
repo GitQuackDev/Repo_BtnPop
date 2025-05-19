@@ -1,0 +1,381 @@
+/* News Card Styling */
+.feature__card,
+.trending__card,
+.latest__card {
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+}
+
+/* Feature Card Styling */
+.feature__card {
+  position: relative;
+}
+
+.feature__card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.feature__image-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.feature__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.feature__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+}
+
+.feature__card:hover .feature__image {
+  transform: scale(1.05);
+}
+
+.feature__content {
+  padding: var(--spacing-md);
+  position: relative;
+}
+
+.feature__heading {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feature__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.feature__date,
+.feature__author {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+}
+
+.feature__author {
+  position: relative;
+  padding-left: var(--spacing-sm);
+}
+
+.feature__author::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
+.feature__summary {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Trending Card Styling */
+.trending__card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.trending__card-link {
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-md);
+  width: 100%;
+  align-items: center;
+}
+
+.trending__image-wrapper {
+  width: 100%;
+  height: 80px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.trending__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.trending__card:hover .trending__image {
+  transform: scale(1.1);
+}
+
+.trending__content {
+  padding: var(--spacing-sm);
+}
+
+.trending__heading {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trending__date {
+  display: block;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* Latest Card Styling */
+.latest__card {
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  overflow: hidden; /* Consider if this hides desired content, but usually good for cards */
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  height: 100%; /* Keep if cards in a grid need consistent height */
+  display: flex; /* MODIFIED: Make it a flex container */
+  flex-direction: column; /* MODIFIED: Arrange children (link and actions) vertically */
+}
+
+.latest__card-link {
+  text-decoration: none;
+  color: inherit;
+  /* display: block; */ /* Original: block */
+  /* height: 100%; */ /* REMOVED: This was likely causing the issue */
+  flex-grow: 1; /* ADDED: Allow this section to take available vertical space */
+  display: flex; /* ADDED: Make the link itself a flex container for its children (image + content) */
+  flex-direction: column; /* ADDED: Arrange image and content vertically within the link */
+  overflow: hidden; /* ADDED: Prevent long content from breaking layout */
+}
+
+.latest__image-wrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.latest__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.latest__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+}
+
+.latest__card:hover .latest__image {
+  transform: scale(1.05);
+}
+
+.latest__content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  /* height: calc(100% - 200px); */ /* REMOVED: Let flexbox handle height */
+  flex-grow: 1; /* ADDED: Allow content to fill space within the link area */
+  overflow: hidden; /* ADDED: To handle potential overflow of summary, especially with -webkit-line-clamp */
+}
+
+.latest__heading {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.latest__date {
+  display: block;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.latest__summary {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-top: auto;
+}
+
+/* Like/Dislike Action Buttons */
+.latest__actions {
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.action-button {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-light);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  transition: all 0.2s ease;
+}
+
+.action-button:hover {
+  background-color: var(--color-background-muted);
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
+}
+
+.action-button.active {
+  background-color: var(--color-primary-x-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.action-button.like-button.active {
+  color: var(--color-success);
+  border-color: var(--color-success-light);
+  background-color: var(--color-success-x-light);
+}
+
+.action-button.dislike-button.active {
+  color: var(--color-danger);
+  border-color: var(--color-danger-light);
+  background-color: var(--color-danger-x-light);
+}
+
+.action-button svg {
+  font-size: 1em; /* Adjust icon size if needed */
+}
+
+.action-button span {
+  line-height: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .feature__image-container {
+    height: 350px;
+  }
+  
+  .latest__image-wrapper {
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .feature__image-container {
+    height: 300px;
+  }
+  
+  .trending__card {
+    grid-template-columns: 100px 1fr;
+  }
+  
+  .trending__card-link {
+    grid-template-columns: 100px 1fr;
+  }
+  
+  .trending__image-wrapper {
+    height: 70px;
+  }
+  
+  .latest__image-wrapper {
+    height: 160px;
+  }
+  
+  .feature__heading {
+    font-size: var(--font-size-lg);
+  }
+  
+  .latest__heading {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .feature__image-container {
+    height: 250px;
+  }
+  
+  .trending__card {
+    grid-template-columns: 80px 1fr;
+  }
+  
+  .trending__card-link {
+    grid-template-columns: 80px 1fr;
+  }
+  
+  .trending__image-wrapper {
+    height: 60px;
+  }
+  
+  .feature__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .feature__author {
+    padding-left: 0;
+  }
+  
+  .feature__author::before {
+    display: none;
+  }
+}

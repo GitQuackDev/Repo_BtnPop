@@ -1,0 +1,248 @@
+/* Admin Dashboard News Form Styles */
+:root {
+  --admin-primary-color: #007bff;
+  --admin-danger-color: #dc3545;
+  --admin-light-color: #f8f9fa;
+  --admin-dark-color: #343a40;
+  --admin-white-color: #ffffff;
+  --admin-text-color: #212529;
+  --admin-text-muted-color: #6c757d;
+  --admin-border-color: #dee2e6;
+  --admin-card-border-radius: 0.375rem;
+  --admin-font-family: 'Inter', sans-serif;
+  --admin-spacing-unit: 1rem;
+}
+
+.news-form {
+  font-family: var(--admin-font-family);
+  padding: var(--admin-spacing-unit);
+  background-color: var(--admin-white-color); /* Ensure form has a background in modal */
+  border-radius: var(--admin-card-border-radius); /* Match modal content radius */
+}
+
+.news-form__title {
+  font-size: 1.75rem;
+  color: var(--admin-text-color);
+  margin-bottom: calc(var(--admin-spacing-unit) * 1.5);
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid var(--admin-border-color);
+  padding-bottom: var(--admin-spacing-unit);
+}
+
+.news-form__group {
+  margin-bottom: calc(var(--admin-spacing-unit) * 1.25);
+}
+
+.news-form__label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.5);
+  color: var(--admin-text-color);
+  font-size: 0.95rem;
+}
+
+.news-form__input,
+.news-form__textarea,
+.news-form__select /* Assuming select might be used, or for consistency */
+{
+  width: 100%;
+  padding: calc(var(--admin-spacing-unit) * 0.75) var(--admin-spacing-unit);
+  border: 1px solid var(--admin-border-color);
+  border-radius: var(--admin-card-border-radius);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--admin-white-color);
+  color: var(--admin-text-color);
+}
+
+.news-form__input:focus,
+.news-form__textarea:focus,
+.news-form__select:focus {
+  border-color: var(--admin-primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.news-form__input.error,
+.news-form__textarea.error,
+.news-form__select.error {
+  border-color: var(--admin-danger-color);
+}
+
+.news-form__error {
+  display: block;
+  color: var(--admin-danger-color);
+  font-size: 0.85rem;
+  margin-top: calc(var(--admin-spacing-unit) * 0.25);
+}
+
+.news-form__hint {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted-color);
+  margin-left: calc(var(--admin-spacing-unit) * 0.5);
+}
+
+.news-form__char-count {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted-color);
+  text-align: right;
+  margin-top: calc(var(--admin-spacing-unit) * 0.25);
+}
+
+/* ReactQuill specific styling */
+.news-form__editor .ql-toolbar {
+  border-top-left-radius: var(--admin-card-border-radius);
+  border-top-right-radius: var(--admin-card-border-radius);
+  border-color: var(--admin-border-color);
+  background-color: var(--admin-light-color);
+}
+.news-form__editor .ql-container {
+  border-bottom-left-radius: var(--admin-card-border-radius);
+  border-bottom-right-radius: var(--admin-card-border-radius);
+  border-color: var(--admin-border-color);
+  min-height: 200px; /* Ensure a decent height */
+  font-size: 1rem;
+}
+.news-form__editor.error .ql-container,
+.news-form__editor.error .ql-toolbar {
+    border-color: var(--admin-danger-color);
+}
+
+/* Image Upload */
+.news-form__image-upload {
+  border: 2px dashed var(--admin-border-color);
+  border-radius: var(--admin-card-border-radius);
+  padding: var(--admin-spacing-unit);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  background-color: var(--admin-light-color);
+}
+
+.news-form__image-upload:hover {
+  border-color: var(--admin-primary-color);
+}
+
+.news-form__image-upload.error {
+    border-color: var(--admin-danger-color);
+}
+
+.news-form__image-preview-container {
+  position: relative;
+  display: inline-block; /* Allows centering if text-align: center is on parent */
+  max-width: 100%;
+}
+
+.news-form__image-preview {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: var(--admin-card-border-radius);
+  object-fit: contain;
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.5);
+}
+
+.news-form__image-remove {
+  position: absolute;
+  top: calc(var(--admin-spacing-unit) * 0.5);
+  right: calc(var(--admin-spacing-unit) * 0.5);
+  background-color: rgba(0,0,0,0.6);
+  color: var(--admin-white-color);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1.2rem;
+}
+
+.news-form__image-remove:hover {
+  background-color: var(--admin-danger-color);
+}
+
+.news-form__image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-text-muted-color);
+  padding: var(--admin-spacing-unit);
+}
+
+.news-form__image-placeholder svg {
+  font-size: 2.5rem;
+  margin-bottom: calc(var(--admin-spacing-unit) * 0.5);
+}
+
+/* Checkbox */
+.news-form__checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.news-form__checkbox {
+  margin-right: calc(var(--admin-spacing-unit) * 0.75);
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--admin-primary-color);
+}
+
+.news-form__checkbox-label {
+  font-size: 0.95rem;
+  color: var(--admin-text-color);
+}
+
+/* Form Actions */
+.news-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--admin-spacing-unit);
+  margin-top: calc(var(--admin-spacing-unit) * 2);
+  padding-top: calc(var(--admin-spacing-unit) * 1.5);
+  border-top: 1px solid var(--admin-border-color);
+}
+
+.news-form__btn {
+  padding: calc(var(--admin-spacing-unit) * 0.75) calc(var(--admin-spacing-unit) * 1.5);
+  border: none;
+  border-radius: var(--admin-card-border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-form__btn--cancel {
+  background-color: var(--admin-light-color);
+  color: var(--admin-text-color);
+  border: 1px solid var(--admin-border-color);
+}
+
+.news-form__btn--cancel:hover {
+  background-color: darken(var(--admin-light-color), 5%); /* Needs preprocessor or manual color */
+}
+
+.news-form__btn--submit {
+  background-color: var(--admin-primary-color);
+  color: var(--admin-white-color);
+}
+
+.news-form__btn--submit:hover {
+  background-color: darken(var(--admin-primary-color), 10%); /* Needs preprocessor or manual color */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Ensure select dropdown also uses the modern style if you add one */
+select.news-form__input {
+    appearance: none; /* Remove default system appearance */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right var(--admin-spacing-unit) center;
+    background-size: .65em auto;
+    padding-right: calc(var(--admin-spacing-unit) * 2.5); /* Make space for arrow */
+}

@@ -1,0 +1,213 @@
+/* Event Form Styles */
+.event-form {
+  font-family: var(--font-tertiary);
+}
+
+.event-form__title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+  text-align: center;
+  position: relative;
+  padding-bottom: var(--spacing-sm);
+}
+
+.event-form__title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: var(--color-primary);
+}
+
+.event-form__group {
+  margin-bottom: var(--spacing-md);
+}
+
+.event-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.event-form__label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.event-form__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  transition: all 0.3s ease;
+}
+
+.event-form__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.event-form__input.error,
+.event-form__editor.error,
+.event-form__image-upload.error {
+  border-color: #f44336;
+}
+
+.event-form__error {
+  color: #f44336;
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+  display: block;
+}
+
+/* Quill Editor Styles */
+.event-form__editor {
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--border-radius);
+}
+
+.event-form__editor .ql-toolbar {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  background-color: #f9f9f9;
+}
+
+.event-form__editor .ql-container {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  min-height: 150px;
+  font-family: var(--font-tertiary);
+}
+
+/* Image Upload Styles */
+.event-form__image-upload {
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.event-form__image-upload:hover {
+  border-color: var(--color-primary);
+}
+
+.event-form__image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-light);
+}
+
+.event-form__image-placeholder svg {
+  font-size: 3rem;
+  opacity: 0.7;
+}
+
+.event-form__image-preview-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.event-form__image-preview {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.event-form__image-remove {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.event-form__image-remove:hover {
+  background-color: #d32f2f;
+  transform: scale(1.1);
+}
+
+/* Form Actions */
+.event-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+.event-form__btn {
+  padding: 10px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.event-form__btn--cancel {
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+}
+
+.event-form__btn--submit {
+  background-color: var(--color-primary);
+  border: none;
+  color: white;
+}
+
+.event-form__btn--cancel:hover {
+  background-color: #f5f5f5;
+}
+
+.event-form__btn--submit:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .event-form__row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .event-form__actions {
+    flex-direction: column-reverse;
+    gap: var(--spacing-sm);
+  }
+  
+  .event-form__btn {
+    width: 100%;
+  }
+}
