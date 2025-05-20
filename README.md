@@ -20,17 +20,10 @@ The project consists of two main parts:
    cd ../btnpop-app; npm install
    ```
 
-3. Initialize the database using our setup script (from the project root):
-   ```
-   .\init-db.ps1
-   ```
+
    
    This will create an admin user and seed the database with sample content.
 
-4. From the project root, run the development script:
-   ```
-   .\dev.ps1
-   ```
    
    This will start both the backend (http://localhost:5000) and frontend (http://localhost:3000) simultaneously.
 
