@@ -2,15 +2,15 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/User');
 
-// Admin user credentials
+
 const adminUser = {
   username: 'admin',
   email: 'admin@btnpop.com',
-  password: 'adminPassword123', // Change this in production!
+  password: 'adminPassword123', 
   role: 'admin'
 };
 
-// Connect to MongoDB
+
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -20,11 +20,11 @@ mongoose
     console.log('MongoDB Connected');
     
     try {
-      // Check if any user exists
+      
       const userCount = await User.countDocuments();
       
       if (userCount === 0) {
-        // Create admin user if no users exist
+        
         const user = new User(adminUser);
         await user.save();
         console.log('Admin user created successfully');
