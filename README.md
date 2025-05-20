@@ -17,7 +17,7 @@ The project consists of two main parts:
 2. Install dependencies for both applications:
    ```
    cd backend; npm install
-   cd ../btnpop-app; npm install
+   cd btnpop-app; npm install
    ```
 
 
