@@ -39,7 +39,7 @@ The project consists of two main parts:
    npm install
    ```
 
-3. Create `.env` file with the following content:
+3. Create `.env` (at the backend) file with the following content:
    ```
    PORT=5000
    MONGO_URI=INPUT YOUR URI HERE
